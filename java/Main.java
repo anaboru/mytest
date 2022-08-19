@@ -8,6 +8,7 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.Scanner;
 
 public class Main {
+    public static int rom;
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
         System.out.println("Привет! Я примитивный калькулятор. Я могу делить, умножать, складывать и вычитать");
@@ -17,11 +18,16 @@ public class Main {
         System.out.println("Я также сломаюсь, если ты попытаешься использовать в выражении более одного оператора");
         System.out.print("Плиз би пэтиент, я ещё учусь!\nВводи---->>>    ");
         String input = sc.nextLine();
+        String prov = input;
         try {
-            calc(input);
-            if (input == calc(input)) {
+            input = calc(input);
+            if (input.equals(prov)) {
                 throw new ArithmeticException();
             }
+                if (rom>0) {
+                    input = ArabianToRomanian(input);
+                    System.out.println("Я сделал! Смотри ----->     " + input);
+                } else System.out.println("Я сделал! Смотри ----->     " + input);
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             System.out.println("Упс, некорректный ввод! Ты ввёл какое-то недопустимое выражение");
         } catch (IOException e) {
@@ -31,21 +37,19 @@ public class Main {
         } catch (Error e) {
             System.out.println("Упс, некорректный ввод! Ты ввёл одновременно и арабское, и римское число");
         }
-        input = calc(input);
-        System.out.println("Я сделал! Смотри ----->     " + input);
+        /*if(rom>0) {
+            input = ArabianToRomanian(input);
+            System.out.println("Я сделал! Смотри ----->     " + input);
+        } else System.out.println("Я сделал! Смотри ----->     " + input);*/
     }
 
     public static String calc(String input) throws IOException {
-        input = threatment(input);
-        return input;
-
+        return input = threatment(input);
     }
 
-    static String threatment(String input) throws IOException {
-        String[] operators = {"+", "-", "/", "*"};
+    static String threatment(String input) throws IOException {String[] operators = {"+", "-", "/", "*"};
         int firstOperand = 0;
         int secondOperand = 0;
-        int rom = 0;
         String operator;
         for (String element : operators) {
             String[] splittedInput = input.split("\\" + element, 2);
@@ -82,10 +86,8 @@ public class Main {
                 }
                 break;
             }
-
         }
-        return input;
-
+        return input + "";
     }
 
     static String[] RomanianToArabian(String[] RomArray) {
@@ -113,21 +115,22 @@ public class Main {
         }
         return true;
     }
-        static String ArabianToRomanian(String romabian){
+    static String ArabianToRomanian(String romabian){
         int num = Integer.parseInt(romabian);
         Romanian[] numbers = Romanian.values();
         String roman = "";
-            for (int i = numbers.length - 1 ; i >= 0; i--) {
-                while(num > numbers[i].getValue()){
-                    roman += numbers[i];
-                    num -= numbers[i].getValue();
-                }
+        for (int i = (numbers.length - 1) ; i >= 0; i--) {
+            while(num >= numbers[i].getValue()){
+                roman += numbers[i];
+                num -= numbers[i].getValue();
+                i++;
             }
+        }
         return roman;
     }
 }
     enum Romanian {
-        I(1), II(2), III(3), IV(4), V(5), VI(6), VII(7), VIII(8), IX(9), X(10), XL(40), L(50), LC(90), C(100);
+        I(1), II(2), III(3), IV(4), V(5), VI(6), VII(7), VIII(8), IX(9), X(10), XL(40), L(50), LC(90), C(100), D(500);
         private final int value;
 
 
