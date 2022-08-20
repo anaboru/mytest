@@ -45,7 +45,7 @@ public class Main {
         int secondOperand = 0;
         String operator;
         for (String element : operators) {
-            String[] splittedInput = input.split(String.valueOf( "\\" + element), 2);
+            String[] splittedInput = input.split(String.valueOf("\\" + element), 2);
             operator = element;
             if (splittedInput.length != 2) {
                 continue;
@@ -128,6 +128,7 @@ enum Romanian {
 
 
     Romanian(int value) {
+
         this.value = value;
     }
 
