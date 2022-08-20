@@ -1,10 +1,6 @@
 package test.calc.java;
 
-import java.io.CharConversionException;
 import java.io.IOException;
-import java.io.InterruptedIOException;
-import java.util.Arrays;
-import java.util.InvalidPropertiesFormatException;
 import java.util.Scanner;
 
 public class Main {
@@ -19,15 +15,16 @@ public class Main {
         System.out.print("Плиз би пэтиент, я ещё учусь!\nВводи---->>>    ");
         String input = sc.nextLine();
         String prov = input;
+        input = input.replace(" ", "");
         try {
             input = calc(input);
             if (input.equals(prov)) {
                 throw new ArithmeticException();
             }
-                if (rom>0) {
-                    input = ArabianToRomanian(input);
-                    System.out.println("Я сделал! Смотри ----->     " + input);
-                } else System.out.println("Я сделал! Смотри ----->     " + input);
+            if (rom>0) {
+                input = ArabianToRomanian(input);
+                System.out.println("Я сделал! Смотри ----->     " + input);
+            } else System.out.println("Я сделал! Смотри ----->     " + input);
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             System.out.println("Упс, некорректный ввод! Ты ввёл какое-то недопустимое выражение");
         } catch (IOException e) {
@@ -37,10 +34,6 @@ public class Main {
         } catch (Error e) {
             System.out.println("Упс, некорректный ввод! Ты ввёл одновременно и арабское, и римское число");
         }
-        /*if(rom>0) {
-            input = ArabianToRomanian(input);
-            System.out.println("Я сделал! Смотри ----->     " + input);
-        } else System.out.println("Я сделал! Смотри ----->     " + input);*/
     }
 
     public static String calc(String input) throws IOException {
@@ -52,7 +45,7 @@ public class Main {
         int secondOperand = 0;
         String operator;
         for (String element : operators) {
-            String[] splittedInput = input.split("\\" + element, 2);
+            String[] splittedInput = input.split(String.valueOf( "\\" + element), 2);
             operator = element;
             if (splittedInput.length != 2) {
                 continue;
@@ -129,18 +122,16 @@ public class Main {
         return roman;
     }
 }
-    enum Romanian {
-        I(1), II(2), III(3), IV(4), V(5), VI(6), VII(7), VIII(8), IX(9), X(10), XL(40), L(50), LC(90), C(100), D(500);
-        private final int value;
+enum Romanian {
+    I(1), II(2), III(3), IV(4), V(5), VI(6), VII(7), VIII(8), IX(9), X(10), XL(40), L(50), LC(90), C(100), D(500);
+    private final int value;
 
 
-        Romanian(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
+    Romanian(int value) {
+        this.value = value;
     }
 
+    public int getValue() {
+        return value;
+    }
+}
